@@ -1,0 +1,57 @@
+---
+layout: page
+title: "归 档"
+---
+{% include _widget/archives.ext %}
+<div class="list-container">
+  <ul class="nav nav-tabs">
+	  {% for member in yearsgroup %}
+	  {% assign tmpv = member | split: "-" %}
+	  <li><a href="#{{ tmpv[0] }}-ref" data-toggle="tab" id="{{ tmpv[0] }}-id"> {{ tmpv[0] }}<sup>({{tmpv[1]}})</sup></a></li>
+	  {% endfor %}
+  </ul>
+</div>
+<br>
+<!-- Tab panes -->
+<div class="tab-content list-container">
+  {% assign precount = 0 %}
+  {% assign lyear = 0 %}
+  {% for node in site.posts %}
+      {% capture precount %} {{ 1 | plus: precount }} {% endcapture %}
+      {% capture year %}{{ node.date | date: '%Y%m' }}{% endcapture %}
+      {% if year != lyear %}
+        {% if lyear != 0 %}
+        </ul>
+        </div>
+        <script>
+        document.getElementById("{{lyear}}-txt2").innerHTML="({{precount}})";
+        </script>
+        {% endif %}
+        <div class="tab-pane fade" id="{{ year }}-ref">
+        <a id="{{ year }}"></a>
+        <h2 style="margin-top: 0px">{{ year }}<sup id="{{year}}-txt2">TBD</sup></h2>
+        <ul class="list-unstyled">
+        {% assign precount = 0 %}
+      {% endif %}
+      {% include _widget/tags_cates.html %}
+      {% capture lyear %}{{ node.date | date: '%Y%m' }}{% endcapture %}
+  {% endfor %}
+  {% capture precount %} {{ 1 | plus: precount }} {% endcapture %}
+  </ul>
+  </div>
+  <script>
+  document.getElementById("{{lyear}}-txt2").innerHTML="({{precount}})";
+  </script>
+</div>
+
+<div class="clearfix"></div>
+<script>
+function getid()
+{
+    var ih;
+    ih=location.href.split("#")[1];
+    $('#'+decodeURI(ih)+'-id').tab("show");
+}
+</script>
+<body onload="getid()">
+</body>

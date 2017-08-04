@@ -38,7 +38,8 @@ a img:focus {
   cursor: zoom-in;
 }
 blockquote {
-  color: #808080;
+  font-size: 16px;
+  color: #606060;
 }
 hr.small {
   max-width: 80px;
@@ -136,7 +137,7 @@ hr.small {
 .intro-header {
   background-color: #002040;
   background-attachment: scroll;
-  margin-bottom: 40px;
+  margin-bottom: 16px;
 }
 .intro-header .site-heading,
 .intro-header .post-heading,
@@ -191,7 +192,7 @@ hr.small {
 }
 .intro-header .post-heading .meta {
   font-family: 'Lora', 'Times New Roman', serif;
-  font-style: italic;
+  /*font-style: italic;*/
   font-weight: 300;
   font-size: 16px;
 }
@@ -205,6 +206,14 @@ hr.small {
   .intro-header .post-heading .subheading {
     font-size: 24px;
   }
+}
+.subheading > a {
+  color: #ffffff;
+}
+.subheading > a:hover,
+.subheading > a:focus {
+  text-decoration: none;
+  color: blue;
 }
 .post-preview > a {
   color: #0a3a92;
@@ -395,5 +404,78 @@ img::-moz-selection {
   background: transparent;
 }
 body {
+/*!
+  background-color: #f0f7d5;
+*/
   webkit-tap-highlight-color: #0085a1;
+}
+.badge {
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-color: #2ba5ca;
+  border-radius: 5px;
+}
+article hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #888;
+}
+.catcats {
+  background-color: #66f;
+}
+.catcats:hover,
+.catcats:focus {
+  background-color: #449d44;
+}
+.leftleft {
+	margin: 0.8em 0 0 0;
+}
+.rightright {
+	margin: 0 0 0.8em 0;
+}
+@media only screen and (min-width: 350px) {
+.leftleft {
+	margin: 0.2em 0;
+        float: left;
+	width: 30%
+}
+}
+@media only screen and (min-width: 350px) {
+.rightright {
+	margin: 0.2em 0;
+        position: relative;
+        float: left;
+	width: 69%
+}
+}
+@media only screen and (min-width: 650px) {
+.leftleft {
+	margin: 0.2em 0;
+        float: left;
+	width: 18%
+}
+}
+@media only screen and (min-width: 650px) {
+.rightright {
+	margin: 0.2em 0;
+        position: relative;
+        float: left;
+	width: 81%
+}
+}
+.index_hint {
+	margin: 1em 0;
+	color: #2ca6cb;
+}
+.ai-meta {
+	color: #888
 }

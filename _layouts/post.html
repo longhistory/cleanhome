@@ -17,13 +17,13 @@ layout: default
                       {% assign categories_list = page.categories %}
                       {% if categories_list.first[0] == null %}
                         {% for category in categories_list %}
-                                <a href="{{ site.baseurl }}/{{ site.categories_path }}#{{ category | replace:' ','-' }}-id">
+                                <a href="{{ site.baseurl }}/{{ site.categories_path }}#{{ category | replace:' ','-' }}">
                                   {{ category | capitalize }}({{ site.categories[category].size }})
                                </a>
                         {% endfor %}
                       {% else %}
                         {% for category in categories_list %}
-                                <a href="{{ site.baseurl }}/{{ site.categories_path }}#{{ category[0] | replace:' ','-' }}-id">
+                                <a href="{{ site.baseurl }}/{{ site.categories_path }}#{{ category[0] | replace:' ','-' }}">
                                     {{ category[0] | capitalize }}({{ category[1].size }})
                                 </a>
                         {% endfor %}
@@ -34,13 +34,13 @@ layout: default
                       {% assign tags_list = page.tags %}
                       {% if tags_list.first[0] == null %}
                         {% for tag in tags_list %}
-                                <a href="{{ site.baseurl }}/{{ site.tags_path }}#{{ tag | replace:' ','-' }}-id">
+                                <a href="{{ site.baseurl }}/{{ site.tags_path }}#{{ tag | replace:' ','-' }}">
                                   {{ tag | capitalize }}({{ site.tags[tag].size }})
                                </a>  
                         {% endfor %}
                       {% else %}
                         {% for tag in tags_list %}
-                                <a href="{{ site.baseurl }}/{{ site.tags_path }}#{{ tag[0] | replace:' ','-' }}-id">
+                                <a href="{{ site.baseurl }}/{{ site.tags_path }}#{{ tag[0] | replace:' ','-' }}">
                                     {{ tag[0] | capitalize }}({{ tag[1].size }})
                                 </a>  
                         {% endfor %}
@@ -53,32 +53,98 @@ layout: default
     </div>
 </header>
 
+<section class="container" style="width: 98%" id="about">
 <!-- Post Content -->
 <article>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-
+    <div class="container" id="main">
 				{{ content }}
 
-                <hr>
 
                 <ul class="pager">
                     {% if page.previous.url %}
-                    <li class="previous">
-                        <a href="{{ page.previous.url | prepend: site.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.previous.title}}">&larr; 上一篇</a>
+                    <li class="next">
+                        <a href="{{ page.previous.url | prepend: site.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.previous.title}}">旧一篇 &rarr;</a>
                     </li>
                     {% endif %}
                     {% if page.next.url %}
-                    <li class="next">
-                        <a href="{{ page.next.url | prepend: site.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.next.title}}">下一篇 &rarr;</a>
+                    <li class="previous">
+                        <a href="{{ page.next.url | prepend: site.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.next.title}}">&larr; 新一篇</a>
                     </li>
                     {% endif %}
                 </ul>
+		<div>
+			<h4 class="index_hint">相关文章</h4>
+			{% assign tags_list = page.tags %}
+			{% if tags_list.first[0] == null %}
+				{% assign related_count = 0 %}
+				{% if tags_list.size > 1 %}
+					{% for page_tag in tags_list offset:1 %}
+						{% for tag in site.tags %}
+							{% if tag[0] == page_tag %}
+							  {% assign pages_list = tag[1] %}
+							   {% for post in pages_list %}
+							    {% if post.title != page.title %}
+							    <span class="ai-meta">
+								    &nbsp;&nbsp; <sup>{{ post.date | date: "%Y-%m-%d" }}</sup>
+							    </span>
+							    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+							    <br>
+							    {% assign related_count = related_count | plus: 1 %}
+							    {% if related_count > 11 %}
+							        {% break %}
+							    {% endif %}
+							    {% endif %}
+							   {% endfor %}
+							  {% assign pages_list = nil %}
+							{% endif %}
+							{% if related_count > 11 %}
+							    {% break %}
+							{% endif %}
+						{% endfor %}
+					{% endfor %}
+				{% endif %}
+				{% if related_count < 5 %}
+					{% for page_cat in page.categories %}
+						{% for cat in site.categories %}
+							{% if cat[0] == page_cat %}
+							  {% assign pages_list = cat[1] %}
+							   {% for post in pages_list %}
+							    {% if post.title != page.title %}
+							      <span class="ai-meta">
+								    &nbsp;&nbsp; <sup>{{ post.date | date: "%Y-%m-%d" }}</sup>
+							      </span>
+							      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+							      <br>
+							      {% assign related_count = related_count | plus: 1 %}
+							      {% if related_count > 4 %}
+							        {% break %}
+							      {% endif %}
+							    {% endif %}
+							   {% endfor %}
+							  {% assign pages_list = nil %}
+							{% endif %}
+						{% endfor %}
+					{% endfor %}
+				{% endif %}
+			{% else %}
+				{% for tag in tags_list %}
+				<a href="{{ site.baseurl }}/{{ site.tags_path }}#{{ tag[0] | replace:' ','-' }}">
+					{{ tag[0] | capitalize }}({{ tag[1].size }})
+				</a>
+				{% endfor %}
+			{% endif %}
+			{% assign tags_list = nil %}
+		</div>
 
-            </div>
-        </div>
+    </div>
+    <div id="asidepart">
+        <aside class="clearfix">
+            {% for widget in site.widgets %}
+            {% include _widget/{{widget}}.html %}
+            {% endfor %}
+        </aside>
     </div>
 </article>
 
+</section>
 <hr>

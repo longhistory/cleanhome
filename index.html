@@ -3,6 +3,10 @@ layout: page
 description: "黎涛的博客"
 ---
 
+{% if paginator.previous_page %}
+{% else %}
+<h4 class="index_hint"><a href="{{ site.baseurl }}/about.html">{{ site.blog_owner }}</a>最新的文章</h4>
+{% endif %}
 {% for post in paginator.posts %}
 <div class="post-preview">
     <a href="{{ post.url | prepend: site.baseurl }}">
@@ -18,13 +22,13 @@ description: "黎涛的博客"
       {% assign categories_list = post.categories %}
       {% if categories_list.first[0] == null %}
         {% for category in categories_list %}
-                <a href="{{ site.baseurl }}/{{ site.categories_path }}#{{ category | replace:' ','-' }}-id">
+                <a href="{{ site.baseurl }}/{{ site.categories_path }}#{{ category | replace:' ','-' }}">
                   {{ category | capitalize }}({{ site.categories[category].size }})
                </a>
         {% endfor %}
       {% else %}
         {% for category in categories_list %}
-                <a href="{{ site.baseurl }}/{{ site.categories_path }}#{{ category[0] | replace:' ','-' }}-id">
+                <a href="{{ site.baseurl }}/{{ site.categories_path }}#{{ category[0] | replace:' ','-' }}">
                     {{ category[0] | capitalize }}({{ category[1].size }})
                 </a>
         {% endfor %}
@@ -35,13 +39,13 @@ description: "黎涛的博客"
       {% assign tags_list = post.tags %}
       {% if tags_list.first[0] == null %}
         {% for tag in tags_list %}
-                <a href="{{ site.baseurl }}/{{ site.tags_path }}#{{ tag | replace:' ','-' }}-id">
+                <a href="{{ site.baseurl }}/{{ site.tags_path }}#{{ tag | replace:' ','-' }}">
                   {{ tag | capitalize }}({{ site.tags[tag].size }})
                </a>  
         {% endfor %}
       {% else %}
         {% for tag in tags_list %}
-                <a href="{{ site.baseurl }}/{{ site.tags_path }}#{{ tag[0] | replace:' ','-' }}-id">
+                <a href="{{ site.baseurl }}/{{ site.tags_path }}#{{ tag[0] | replace:' ','-' }}">
                     {{ tag[0] | capitalize }}({{ tag[1].size }})
                 </a>  
         {% endfor %}
@@ -57,12 +61,12 @@ description: "黎涛的博客"
 <ul class="pager">
     {% if paginator.previous_page %}
     <li class="previous">
-        <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; Newer Posts</a>
+        <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; 较新的文章</a>
     </li>
     {% endif %}
     {% if paginator.next_page %}
     <li class="next">
-        <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Older Posts &rarr;</a>
+        <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">较早的文章 &rarr;</a>
     </li>
     {% endif %}
 </ul>

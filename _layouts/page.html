@@ -10,7 +10,7 @@ layout: default
                 <div class="site-heading">
                     <h1>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</h1>
                     <hr class="small">
-                    <span class="subheading">{{ page.description }}</span>
+		    <span class="subheading"><a href="{{ site.baseurl }}/about">{{ page.description }}</a></span>
                 </div>
             </div>
         </div>
@@ -18,12 +18,17 @@ layout: default
 </header>
 
 <!-- Main Content -->
-<div class="container">
-	<div class="row">
-		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<section class="container" style="width: 98%" id="about">
+<div class="container" id="main">
 			{{ content }}
-		</div>
-	</div>
+</div>
+<div id="asidepart">
+	<aside class="clearfix">
+		{% for widget in site.widgets %}
+		{% include _widget/{{widget}}.html %}
+		{% endfor %}
+	</aside>
 </div>
 
+</section>
 <hr>
