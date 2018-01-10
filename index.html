@@ -12,12 +12,14 @@ description: "黎涛的博客"
     <a href="{{ post.url | prepend: site.baseurl }}">
         <h2 class="post-title">            {{ post.title }}
         </h2>
+    </a>
         {% if post.subtitle %}
+    <a href="{{ post.url | prepend: site.baseurl }}">
         <h3 class="post-subtitle">
             {{ post.subtitle }}
         </h3>
-        {% endif %}
     </a>
+        {% endif %}
     <p class="post-meta">发表于{{ post.date | date: "%Y-%m-%d" }} &nbsp;&nbsp; 类别:
       {% assign categories_list = post.categories %}
       {% if categories_list.first[0] == null %}
@@ -71,3 +73,39 @@ description: "黎涛的博客"
     {% endif %}
 </ul>
 {% endif %}
+<div class="pages_choose">
+    <div class="pages_show">
+	<span class="pages_hint">页面</span>
+	{% if paginator.total_pages > 9 %}
+	  {% assign pre_string = "0" %}
+	{% else %}
+	  {% assign pre_string = "" %}
+	{% endif %}
+	{% for i in (1..paginator.total_pages) %}
+	  {% if i == 1 %}
+	  <a href="{{ site.baseurl }}/" id="pagetab">{{ pre_string }}{{ i }}</a>&nbsp;&nbsp;
+	  {% elsif i < 10 %}
+	  <a href="{{ site.baseurl }}/page{{ i }}/" id="pagetab{{ i }}">{{ pre_string }}{{ i }}</a>&nbsp;&nbsp;
+	  {% else %}
+	    <a href="{{ site.baseurl }}/page{{ i }}/" id="pagetab{{ i }}">{{ i }}</a>&nbsp;&nbsp;
+	  {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<script>
+function getid()
+{
+    var ih;
+    ih=location.href.split("page")[1];
+    if(ih==null){
+        ih = '';
+    }
+    else
+    {
+	ih = ih.split("/")[0];
+    }
+    $('#pagetab' + ih).attr("style","background-color:gray;color:white;");
+}
+</script>
+<body onload="getid()">
+</body>
